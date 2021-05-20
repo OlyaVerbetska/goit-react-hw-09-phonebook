@@ -1,0 +1,47 @@
+.contactList__subtitle {
+  font-size: 30px;
+  font-weight: 900;
+  text-align: center;
+  margin: 25px 0 15px 0;
+}
+
+
+.contactList {
+  list-style: none;
+  padding: 0;
+  font-size: 20px;
+}
+.contactList__item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid SteelBlue;
+  padding: 10px 20px;
+}
+.contactList__elem {
+  display: inline-block;
+  margin-right: 10px;
+}
+.contactList__button {
+  display: block;
+  margin-left: auto;
+  min-width: 100px;
+  height: 42px;
+
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  outline: transparent;
+}
+.Loader {
+  margin: 30px 0;
+  text-align: center;
+}
