@@ -1,15 +1,19 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { authOperations } from "../redux/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { authOperations, authSelectors} from "../redux/auth";
 // styles
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { Alert, AlertTitle } from "@material-ui/lab";
+
 
 export default function RegisterView() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+    const error = ( useSelector(authSelectors.getError));
  
   // обработать еррор
   // написать switch
@@ -29,6 +33,11 @@ export default function RegisterView() {
   return (
     <div>
       <h1 className="title">Register Page</h1>
+                {error &&       <Alert severity="error">
+  <AlertTitle>Error</AlertTitle>
+  {error}
+</Alert> }
+
 
       <form onSubmit={handleSubmit} autoComplete="off">
         <TextField
