@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authOperations, authSelectors} from "../redux/auth";
+import { authOperations, authSelectors } from "../redux/auth";
 // styles
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Alert, AlertTitle } from "@material-ui/lab";
-
 
 export default function RegisterView() {
   const dispatch = useDispatch();
@@ -13,31 +12,38 @@ export default function RegisterView() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-    const error = ( useSelector(authSelectors.getError));
- 
-  // обработать еррор
-  // написать switch
+  const error = useSelector(authSelectors.getError);
 
-  const handleChangeName = (event) => setName(event.target.value);
-  const handleChangeEmail = (event) => setEmail(event.target.value);
-  const handleChangePassword = (event) => setPassword(event.target.value);
-
-
+  const handleChange = useCallback((event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case "name":
+        return setName(value);
+      case "email":
+        return setEmail(value);
+      case "password":
+        return setPassword(value);
+      default:
+        return null;
+    }
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(authOperations.register({name, email, password }));
+    dispatch(authOperations.register({ name, email, password }));
     setEmail("");
     setPassword("");
   };
+
   return (
     <div>
       <h1 className="title">Register Page</h1>
-                {error &&       <Alert severity="error">
-  <AlertTitle>Error</AlertTitle>
-  {error}
-</Alert> }
-
+      {error && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error}
+        </Alert>
+      )}
 
       <form onSubmit={handleSubmit} autoComplete="off">
         <TextField
@@ -45,7 +51,7 @@ export default function RegisterView() {
           name="name"
           placeholder="Enter your name"
           value={name}
-          onChange={handleChangeName}
+          onChange={handleChange}
           variant="outlined"
           margin="normal"
           required
@@ -61,7 +67,7 @@ export default function RegisterView() {
           name="email"
           placeholder="Enter your email"
           value={email}
-          onChange={handleChangeEmail}
+          onChange={handleChange}
           variant="outlined"
           margin="normal"
           required
@@ -76,7 +82,7 @@ export default function RegisterView() {
           name="password"
           placeholder="Create password"
           value={password}
-          onChange={handleChangePassword}
+          onChange={handleChange}
           variant="outlined"
           margin="normal"
           required

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { contactsOperations, contactsSelectors } from "../../redux/contacts";
 import PropTypes from "prop-types";
@@ -7,18 +7,24 @@ import { v4 as uuidv4 } from "uuid";
 
 import styles from "../ContactForm/ContactForm.module.css";
 
-  const nameInputId = uuidv4();
-  const telInputId = uuidv4();
+const nameInputId = uuidv4();
+const telInputId = uuidv4();
 
 export default function ContactForm() {
-
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
-  // написать switch
-
-  const changeInputName = (event) => setName(event.currentTarget.value);
-  const changeInputNumber = (event) => setNumber(event.currentTarget.value);
+  const changeInput = useCallback((event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case "name":
+        return setName(value);
+      case "number":
+        return setNumber(value);
+      default:
+        return null;
+    }
+  }, []);
 
   const existContacts = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
@@ -51,7 +57,7 @@ export default function ContactForm() {
           title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
           value={name}
           required
-          onChange={changeInputName}
+          onChange={changeInput}
         />
       </label>
 
@@ -66,7 +72,7 @@ export default function ContactForm() {
           title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
           value={number}
           required
-          onChange={changeInputNumber}
+          onChange={changeInput}
         />
       </label>
       <button type="submit" className={styles.contactForm__button}>

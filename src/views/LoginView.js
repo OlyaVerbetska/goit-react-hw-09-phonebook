@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authOperations, authSelectors } from "../redux/auth";
 // styles
@@ -11,8 +11,18 @@ export default function LoginView() {
   const [password, setPassword] = useState("");
   const error = useSelector(authSelectors.getError);
 
-  const handleChangeEmail = (event) => setEmail(event.target.value);
-  const handleChangePassword = (event) => setPassword(event.target.value);
+  const handleChange = useCallback ((event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case "email":
+        return setEmail(value);
+
+      case "password":
+        return setPassword(value);
+      default:
+        return null;
+    }
+  }, [])
 
   const dispatch = useDispatch();
 
@@ -43,7 +53,7 @@ export default function LoginView() {
           name="email"
           placeholder="Enter your email"
           value={email}
-          onChange={handleChangeEmail}
+          onChange={handleChange}
           variant="outlined"
           margin="normal"
           required
@@ -59,7 +69,7 @@ export default function LoginView() {
           name="password"
           placeholder="Create password"
           value={password}
-          onChange={handleChangePassword}
+          onChange={handleChange}
           variant="outlined"
           margin="normal"
           required
