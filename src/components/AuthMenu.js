@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
 
 
-const AuthMenu = ({ userMail, onLogout }) => (
+const AuthMenu = () => (
   <Toolbar
     style={{
       backgroundColor: 'Orchid',

@@ -19,7 +19,7 @@ const register = userData => async dispatch => {
     token.set(response.data.token);
     dispatch(authActions.registerSuccess(response.data));
   } catch (error) {
-    dispatch(authActions.registerError(error.response.data.message));
+    dispatch(authActions.registerError(error.message));
   }
 };
 

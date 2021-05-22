@@ -1,45 +1,42 @@
-import '../../src/styles.css';
-import { connect } from 'react-redux';
-import { authSelectors, authOperations } from '../redux/auth';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import "../../src/styles.css";
+import { useSelector, useDispatch } from "react-redux";
+import { authSelectors, authOperations } from "../redux/auth";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
 
 
-const UserMenu = ({ userMail, onLogout }) => (
-  <Toolbar
-    style={{
-      backgroundColor: 'Orchid',
-      justifyContent: 'flex-end',
-    }}
-  >
-    <p
-           style={{
-        marginRight: '30px',
-      }}
-    >
-      {userMail}{' '}
-    </p>
-    <Button
-      type="button"
-      variant="contained"
-      component="button"
-      onClick={onLogout}
+export default function UserMenu() {
+  const userMail = useSelector(authSelectors.getMail);
+  const dispatch = useDispatch();
+
+  return (
+    <Toolbar
       style={{
-        backgroundColor: 'SteelBlue',
-        color: 'white',
+        backgroundColor: "Orchid",
+        justifyContent: "flex-end",
       }}
     >
-      Logout
-    </Button>
-  </Toolbar>
-);
-
-const mapStateToProps = state => ({
-  userMail: authSelectors.getMail(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  onLogout: data => dispatch(authOperations.logOut(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+      <p
+        style={{
+          marginRight: "30px",
+        }}
+      >
+        {userMail}{" "}
+      </p>
+      <Button
+        type="button"
+        variant="contained"
+        component="button"
+        onClick={() => {
+          dispatch(authOperations.logOut());
+        }}
+        style={{
+          backgroundColor: "SteelBlue",
+          color: "white",
+        }}
+      >
+        Logout
+      </Button>
+    </Toolbar>
+  );
+}
