@@ -13,9 +13,11 @@ export default function ContactList() {
   const dispatch = useDispatch();
 
   const contactsForList = useSelector(contactsSelectors.getVisibleContacts);
+ // console.log('list', contactsForList);
   const isLoadingContacts = useSelector(contactsSelectors.getLoading);
 
   useEffect(() => {
+    console.log(contactsOperations.fetchContacts());
     dispatch(contactsOperations.fetchContacts());
   }, [dispatch]);
 
